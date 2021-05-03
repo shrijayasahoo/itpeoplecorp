@@ -19,14 +19,6 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 	
-	@GetMapping("/greeting")
-	public String test(){
-		
-		String abc = employeeService.hello();
-		return abc;
-		
-	}
-	
 	@GetMapping("/search/{criteria}")
 	public List<Employee> searchEmployees(@PathVariable("criteria") String criteria, 
 										  @RequestParam(value="firstName",required = false) String firstName,
@@ -46,10 +38,10 @@ public class EmployeeController {
 			employees = employeeService.searchByLastName(lastName);
 			break;
 		case "ageGreater" :
-			employees = employeeService.searchByAgeGreater(age);
+			employees = employeeService.searchByAge(age,false);
 			break;
 		case "searchByAgeLesser" :
-			employees = employeeService.searchByAgeLesser(age);
+			employees = employeeService.searchByAge(age,true);
 			break;
 		case "salaryLessThan" :
 			employees = employeeService.searchBySalary(salary);
@@ -63,7 +55,6 @@ public class EmployeeController {
 		
 		}
 		
-		//List<Employee> employees = employeeService.searchEmployee(criteria, firstName, lastName, age, salary, addressKeyword, bloodGroup);
 		return employees;
 		
 	}
